@@ -1,0 +1,194 @@
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Container,
+  Box,
+  Grid,
+} from "@mui/material";
+import { styled } from "@mui/system";
+
+const HeaderContainer = styled("header")`
+  background: #333;
+  color: #fff;
+  padding: 10px 0;
+`;
+
+const Navbar = styled("nav")`
+  display: flex;
+  flex-direction: column; /* For mobile devices */
+  justify-content: space-around;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row; /* For larger screens */
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+
+  li {
+    margin: 0 15px;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const Logo = styled("a")`
+  img {
+    width: 200px;
+    height: 70px;
+  }
+`;
+
+const TopBar = styled("div")`
+  background: linear-gradient(45deg, #ffcc33 30%, #ffcc66 90%);
+  color: #fff;
+  padding: 10px 0;
+  text-align: center; /* Center text for mobile devices */
+
+  @media (min-width: 768px) {
+    text-align: left; /* Align left for larger screens */
+  }
+`;
+
+const TopBarContainer = styled("div")`
+  display: flex;
+  flex-direction: column; /* For mobile devices */
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row; /* For larger screens */
+    justify-content: space-between;
+  }
+`;
+
+const ContactInfo = styled("div")`
+  display: flex;
+  align-items: center;
+  margin: 10px 0; /* Add margin for separation */
+
+  @media (min-width: 768px) {
+    margin: 0; /* Remove margin for larger screens */
+  }
+`;
+
+const ContactIcon = styled("div")`
+  font-size: 18px;
+  margin-right: 5px;
+  color: #ff0000;
+`;
+
+const ContactText = styled("span")`
+  font-weight: bold;
+  font-size: 14px;
+`;
+
+function Header() {
+  const location = useLocation();
+
+  return (
+    <>
+      <TopBar>
+        <Container>
+          <TopBarContainer>
+            <ContactInfo>
+              <ContactIcon>
+                <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+              </ContactIcon>
+              <ContactText>
+                Kolkata, SaltLake, Sector -V, Pin- 700156
+              </ContactText>
+            </ContactInfo>
+
+            <div className="separator"></div>
+
+            <ContactInfo>
+              <ContactIcon>
+                <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+              </ContactIcon>
+              <ContactText>Daily: 8.00 am to 10.00 pm</ContactText>
+            </ContactInfo>
+
+            <ContactInfo>
+              <ContactIcon>
+                <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+              </ContactIcon>
+              <ContactText>+1 123 456 7890</ContactText>
+            </ContactInfo>
+
+            <ContactInfo>
+              <ContactIcon>
+                <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+              </ContactIcon>
+              <ContactText>booking@spicemasterindia.com</ContactText>
+            </ContactInfo>
+          </TopBarContainer>
+        </Container>
+      </TopBar>
+
+      <HeaderContainer>
+        <Container>
+          <Navbar>
+            <Link to="/">
+              <Logo>
+                <Box component="img" src="/images/logo.png" alt="" />
+              </Logo>
+            </Link>
+
+            <ul>
+              <li>
+                <Link to="/home" color="inherit">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/menu" color="inherit">
+                  Menus
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" color="inherit">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/chefs" color="inherit">
+                  Our Chefs
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" color="inherit">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Button variant="contained" color="primary">
+                  Login
+                </Button>
+              </li>
+            </ul>
+          </Navbar>
+        </Container>
+      </HeaderContainer>
+    </>
+  );
+}
+
+export default Header;
