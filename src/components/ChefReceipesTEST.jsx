@@ -15,10 +15,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Snackbar,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useParams } from "react-router-dom";
 import NotFoundPage from "./NotFoundPage";
@@ -32,12 +32,9 @@ const ChefRecipes = ({ chefsData }) => {
   const [favoritedRecipes, setFavoritedRecipes] = useState([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [recipeToDelete, setRecipeToDelete] = useState(null);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarColor, setSnackbarColor] = useState(""); // Add state for Snackbar color
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // Load favorited recipes from localStorage when the component mounts
     const storedFavoritedRecipes = JSON.parse(localStorage.getItem("favoritedRecipes")) || [];
     setFavoritedRecipes(storedFavoritedRecipes);
   }, []);
@@ -52,29 +49,15 @@ const ChefRecipes = ({ chefsData }) => {
 
   const chefRecipes = chefRecipesData.recipes;
 
-  const updateLocalStorage = (updatedFavoritedRecipes) => {
-    // Update localStorage with the updated list of favorited recipes
-    localStorage.setItem("favoritedRecipes", JSON.stringify(updatedFavoritedRecipes));
-  };
-
   const handleDeleteConfirm = () => {
     if (recipeToDelete) {
       // Filter out the recipe to delete
       const updatedRecipes = chefRecipes.filter((recipe) => recipe.name !== recipeToDelete);
       chefRecipesData.recipes = updatedRecipes;
-
-      // Update favorited recipes
-      const updatedFavoritedRecipes = favoritedRecipes.filter((name) => name !== recipeToDelete);
-
-      // Update localStorage with the updated list of favorited recipes
-      updateLocalStorage(updatedFavoritedRecipes);
-
-      setFavoritedRecipes(updatedFavoritedRecipes);
+      // Update local storage
+      localStorage.setItem("favoritedRecipes", JSON.stringify(favoritedRecipes));
       setRecipeToDelete(null);
       setOpenDeleteDialog(false);
-      setSnackbarMessage("Recipe deleted successfully");
-      setSnackbarColor("green");
-      setOpenSnackbar(true);
     }
   };
 
@@ -93,24 +76,15 @@ const ChefRecipes = ({ chefsData }) => {
       // Remove the recipe from favorited recipes
       const updatedFavoritedRecipes = favoritedRecipes.filter((name) => name !== recipeName);
       setFavoritedRecipes(updatedFavoritedRecipes);
-
-      // Update localStorage
-      updateLocalStorage(updatedFavoritedRecipes);
-
-      setSnackbarMessage("Recipe removed from favorites");
-      setSnackbarColor("red");
+      localStorage.setItem("favoritedRecipes", JSON.stringify(updatedFavoritedRecipes));
+      setIsFavorite(false);
     } else {
       // Add the recipe to favorited recipes
       const updatedFavoritedRecipes = [...favoritedRecipes, recipeName];
       setFavoritedRecipes(updatedFavoritedRecipes);
-
-      // Update localStorage
-      updateLocalStorage(updatedFavoritedRecipes);
-
-      setSnackbarMessage("Recipe added to favorites");
-      setSnackbarColor("green");
+      localStorage.setItem("favoritedRecipes", JSON.stringify(updatedFavoritedRecipes));
+      setIsFavorite(true);
     }
-    setOpenSnackbar(true);
   };
 
   const renderRecipes = () => {
@@ -126,19 +100,15 @@ const ChefRecipes = ({ chefsData }) => {
         </TableCell>
         <TableCell>{recipe.cookingMethod}</TableCell>
         <TableCell>
-          {recipe.rating} <FavoriteIcon color="error" />
+          {recipe.rating} {isFavorite ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
         </TableCell>
         <TableCell>
           <IconButton
             color="primary"
-            aria-label="favorite"
+            aria-label={isFavorite ? "unfavorite" : "favorite"}
             onClick={() => handleFavoriteClick(recipe.name)}
           >
-            {favoritedRecipes.includes(recipe.name) ? (
-              <FavoriteIcon color="error" />
-            ) : (
-              <FavoriteBorderIcon />
-            )}
+            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
           <IconButton
             color="secondary"
@@ -152,6 +122,7 @@ const ChefRecipes = ({ chefsData }) => {
     ));
   };
 
+  
   const bannerStyle = {
     position: "relative",
     marginBottom: "20px",
@@ -221,37 +192,22 @@ const ChefRecipes = ({ chefsData }) => {
             <TableBody>{renderRecipes()}</TableBody>
           </Table>
         </TableContainer>
+
+        <Dialog open={openDeleteDialog}>
+          <DialogTitle>Confirm Deletion</DialogTitle>
+          <DialogContent>
+            Are you sure you want to remove this recipe?
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDeleteCancel} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleDeleteConfirm} color="primary">
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Container>
-
-      {/* Delete Confirmation Dialog */}
-      <Dialog
-        open={openDeleteDialog}
-        onClose={handleDeleteCancel}
-        fullWidth
-        maxWidth="xs"
-      >
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this recipe?
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDeleteConfirm} color="primary">
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Snackbar for Feedback */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={3000}
-        onClose={() => setOpenSnackbar(false)}
-        message={snackbarMessage}
-        style={{ backgroundColor: snackbarColor }}
-      />
     </section>
   );
 };
