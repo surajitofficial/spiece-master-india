@@ -1,3 +1,4 @@
+// RegistrationForm.js
 import React, { useState } from "react";
 import {
   Container,
@@ -5,38 +6,33 @@ import {
   Button,
   Link,
   Grid,
-  Typography,
 } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
+import { useUserContext } from "../context/userContext";
 
 const RegistrationForm = ({
   name,
   email,
-  setEmail,
   password,
   setName,
+  setEmail,
   setPassword,
   setError,
   onClose,
   onSwitchToLogin,
+  openSnackbar,
 }) => {
+  const { registerUser } = useUserContext();
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [photo, setPhoto] = useState(null);
-  const [imagePath, setImagePath] = useState(""); // New state for image URL or path
-
-  // const handlePhotoChange = (e) => {
-  //   const file = e.target.files[0];
-  //   setPhoto(file);
-  // };
+  const [imagePath, setImagePath] = useState(""); // Add imagePath state
 
   const handleRegistration = () => {
     setNameError(false);
     setEmailError(false);
     setPasswordError(false);
 
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
     if (name.trim() === "") {
       setNameError(true);
@@ -53,10 +49,16 @@ const RegistrationForm = ({
       return;
     }
 
-    // Implement your registration logic here, including handling the image URL or path.
-    // You can access the imagePath state for the URL or path provided by the user.
-
-    onClose();
+    if (name && email && password) {
+      registerUser(email, name, password, imagePath) // Pass imagePath to registerUser
+        .then(() => {
+          openSnackbar("Registration successful");
+          onClose();
+        })
+        .catch((error) => {
+          // Handle registration error if needed
+        });
+    }
   };
 
   return (
@@ -95,36 +97,27 @@ const RegistrationForm = ({
             passwordError ? "Password must be at least 6 characters" : ""
           }
         />
-
-        {/* New input field for image URL or path */}
         <TextField
-          label="Image URL or Path"
+          label="Image URL or Path" // Input for imagePath
           variant="outlined"
           margin="normal"
           fullWidth
           value={imagePath}
           onChange={(e) => setImagePath(e.target.value)}
         />
-
-        {/* <input
-          type="file"
-          accept="image/*"
-          onChange={handlePhotoChange}
-        /> */}
-
-        <Grid container justifyContent="space-between" spacing={2}>
+        <Grid container justifyContent="space-between" spacing={4}>
           <Grid item>
-            <Link onClick={onSwitchToLogin}>Already have an account? Sign In</Link>
+            <Link
+              onClick={onSwitchToLogin}
+              style={{ textDecoration: "none", cursor: "pointer" }}
+            >
+              Already have an account? Sign In
+            </Link>
           </Grid>
         </Grid>
-
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Button
-              variant="contained"
-              fullWidth
-              onClick={handleRegistration}
-            >
+            <Button variant="contained" fullWidth onClick={handleRegistration}>
               Register
             </Button>
           </Grid>

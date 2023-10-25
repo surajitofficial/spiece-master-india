@@ -9,8 +9,18 @@ import {
   IconButton,
 } from "@mui/material";
 import { AccountCircle, GitHub, Google } from "@mui/icons-material";
+import { useUserContext } from "../context/userContext";
 
-const LoginForm = ({ email, setEmail, password, setPassword, handleLogin, onSwitchToRegistration }) => {
+const LoginForm = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  handleLogin,
+  onSwitchToRegistration,
+  openSnackbar,
+}) => {
+  const { signInUser, forgotPassword } = useUserContext();
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
@@ -18,7 +28,7 @@ const LoginForm = ({ email, setEmail, password, setPassword, handleLogin, onSwit
     setEmailError(false);
     setPasswordError(false);
 
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/;
 
     if (!emailPattern.test(email)) {
       setEmailError(true);
@@ -30,7 +40,33 @@ const LoginForm = ({ email, setEmail, password, setPassword, handleLogin, onSwit
       return;
     }
 
-    handleLogin(); // Call the login handler from the parent
+    signInUser(email, password)
+      .then(() => {
+        openSnackbar("Login successful");
+        handleLogin();
+      })
+      .catch((error) => {
+        // Handle login error if needed
+      });
+  };
+
+  const handleForgotPassword = () => {
+    setEmailError(false);
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/;
+
+    if (!emailPattern.test(email)) {
+      setEmailError(true);
+      return;
+    }
+
+    forgotPassword(email)
+      .then(() => {
+        setEmail("");
+      })
+      .catch((error) => {
+        // Handle password reset error if needed
+      });
   };
 
   return (
@@ -56,19 +92,28 @@ const LoginForm = ({ email, setEmail, password, setPassword, handleLogin, onSwit
           onChange={(e) => setPassword(e.target.value)}
           error={passwordError}
           helperText={
-            passwordError
-              ? "Password must be at least 6 characters"
-              : ""
+            passwordError ? "Password must be at least 6 characters" : ""
           }
         />
-
-        <Grid container justifyContent="space-between" spacing={2}>
+        <Grid container justifyContent="space-between" spacing={4}>
           <Grid item>
-            <Link onClick={onSwitchToRegistration}>New User? Register</Link>
+            <Link
+              onClick={onSwitchToRegistration}
+              style={{ textDecoration: "none", cursor: "pointer" }}
+            >
+              New User? Register
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link
+              onClick={handleForgotPassword}
+              style={{ textDecoration: "none", cursor: "pointer" }}
+            >
+              Forgot Password?
+            </Link>
           </Grid>
         </Grid>
-
-        <Grid container spacing={2}>
+        <Grid container spacing={4}>
           <Grid item xs={12}>
             <Button
               variant="outlined"
@@ -83,7 +128,6 @@ const LoginForm = ({ email, setEmail, password, setPassword, handleLogin, onSwit
             </Button>
           </Grid>
         </Grid>
-
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Button
