@@ -10,7 +10,7 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import AuthModal from "./AuthModal";
+import AuthModal from "../auth/AuthModal";
 
 const HeaderContainer = styled("header")`
   background: #333;
@@ -235,7 +235,7 @@ function Header() {
                   </Button>
                 </Link>
               </li>
-              {/* <AuthModal open={modalOpen} onClose={closeModal} onLogin={handleLogin} /> */}
+              <AuthModal open={modalOpen} onClose={closeModal} onLogin={handleLogin} />
             </ul>
           </Navbar>
         </Container>
