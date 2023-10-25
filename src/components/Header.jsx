@@ -212,7 +212,7 @@ function Header() {
                 // Render user image and logout button if logged in
                 <>
                   <li>
-                    <img src="/images/user.jpg" alt="User" />
+                    <img src="/images/user.jpg" alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
                   </li>
                   <li>
                     <Button variant="contained" style={customButtonStyle} onClick={handleLogout}>
