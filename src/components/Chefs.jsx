@@ -20,18 +20,34 @@ const ChefSection = ({ chefsData }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 100); 
+    }, 100);
   }, []);
+
+  const sectionStyle = {
+    background: `url('/images/shape-6.png')`,
+    backgroundPosition: "center",
+    padding: "20px 0",
+    opacity: 0.9,
+  };
+
   return (
-    <section style={{ padding: "20px 0" }}>
+    <section style={sectionStyle}>
       <Container>
         {isLoading ? (
-          <Loader /> 
+          <Loader />
         ) : (
           <>
-            <Typography variant="h3" align="center" gutterBottom>
-              Our Talented Chefs
-            </Typography>
+            <div style={{ backgroundColor: "white", borderRadius: "10px" }}>
+              <Typography
+                align="center"
+                variant="h3"
+                gutterBottom
+                style={{ fontWeight: "bold" }}
+              >
+                Our Talented Chefs
+              </Typography>
+            </div>
+
             <Grid container spacing={3}>
               {chefsData.map((chef, index) => (
                 <Grid item xs={12} sm={6} md={4} key={index}>

@@ -15,6 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChefSection from "./Chefs";
 import BannerSection from "./BannerSection";
 import Loader from "react-loader";
+import MenuSection from "./MenuPage";
 
 const chefsData = [
   {
@@ -147,62 +148,7 @@ const ContactUsSection = () => {
 };
 
 // Menu Section
-const MenuSection = () => {
-  const menus = [
-    { title: "Appetizers", price: "$10", image: "/images/service-1.jpg" },
-    { title: "Main Courses", price: "$20", image: "/images/service-2.jpg" },
-    { title: "Desserts", price: "$8", image: "/images/service-3.jpg" },
-  ];
-
-  const sectionStyle = {
-    background: `url('/images/footer-bg.jpg')`,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    padding: "80px 0",
-    color: "#fff",
-    opacity: 0.9,
-  };
-
-  return (
-    <section style={sectionStyle}>
-      <Container>
-        <Typography variant="h3" gutterBottom>
-          Our Delicious Menu
-        </Typography>
-        <Grid container spacing={3}>
-          {menus.map((menu, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card style={{ height: "100%" }}>
-                <CardMedia
-                  component="img"
-                  alt={menu.title}
-                  height="200"
-                  image={menu.image}
-                />
-                <CardContent>
-                  <Typography
-                    variant="h5"
-                    gutterBottom
-                    style={{ color: "#333" }}
-                  >
-                    {menu.title}
-                  </Typography>
-                  <Typography variant="h6" color="primary">
-                    {menu.price}
-                  </Typography>
-                  <Button variant="contained" color="primary">
-                    View Details
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </section>
-  );
-};
+<MenuSection/>
 
 // Chef Section
 // const ChefSection = () => {

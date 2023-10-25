@@ -9,6 +9,7 @@ import ContactPage from "./components/ContactPage";
 import AboutUs from "./components/AboutUs";
 import Chefs from "./components/Chefs";
 import ChefRecipes from "./components/ChefReceipes";
+import MenuDetails from "./components/MenuDetails";
 
 const chefsData = [
   {
@@ -69,8 +70,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/menu" element={<MenuPage />} />
-          <Route path="/reservation" element={<ReservationPage />} />
+          <Route path="/menu" element={<MenuPage />} />      
+          <Route path="/menu/:id" element={<MenuDetails/>} />    
+          <Route path="/reservations" element={<ReservationPage />} />
           <Route path="/chefs" element={<Chefs chefsData={chefsData} />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactPage />} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   AppBar,
@@ -10,6 +10,7 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import AuthModal from "./AuthModal";
 
 const HeaderContainer = styled("header")`
   background: #333;
@@ -103,6 +104,37 @@ const ContactText = styled("span")`
 function Header() {
   const location = useLocation();
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleLogin = () => {
+    // Implement your login logic here and update isLoggedIn state
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    // Implement your logout logic here and update isLoggedIn state
+    setIsLoggedIn(false);
+  };
+
+  const customButtonStyle = {
+    backgroundColor: "#ff69b4", // Pink background color
+    color: "white",
+    borderRadius: "5px",
+    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Drop shadow
+    "&:hover": {
+      backgroundColor: "#ff1493", // Darker pink on hover
+    },
+  };
+
   return (
     <>
       <TopBar>
@@ -112,9 +144,7 @@ function Header() {
               <ContactIcon>
                 <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
               </ContactIcon>
-              <ContactText>
-                Kolkata, SaltLake, Sector -V, Pin- 700156
-              </ContactText>
+              <ContactText>Kolkata, SaltLake, Sector -V, Pin- 700156</ContactText>
             </ContactInfo>
 
             <div className="separator"></div>
@@ -178,11 +208,34 @@ function Header() {
                   Contact
                 </Link>
               </li>
+              {isLoggedIn ? (
+                // Render user image and logout button if logged in
+                <>
+                  <li>
+                    <img src="/images/user.jpg" alt="User" />
+                  </li>
+                  <li>
+                    <Button variant="contained" style={customButtonStyle} onClick={handleLogout}>
+                      Logout
+                    </Button>
+                  </li>
+                </>
+              ) : (
+                // Render login button if not logged in
+                <li>
+                  <Button variant="contained" color="primary" onClick={openModal}>
+                    Login
+                  </Button>
+                </li>
+              )}
               <li>
-                <Button variant="contained" color="primary">
-                  Login
-                </Button>
+                <Link to={"/reservations"}>
+                  <Button variant="contained" style={customButtonStyle}>
+                    Book a Table
+                  </Button>
+                </Link>
               </li>
+              {/* <AuthModal open={modalOpen} onClose={closeModal} onLogin={handleLogin} /> */}
             </ul>
           </Navbar>
         </Container>

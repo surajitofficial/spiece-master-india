@@ -33,7 +33,7 @@ const sliderContent = [
     description:
       "Treat your taste buds to an unforgettable experience. Our chefs create delectable masterpieces, and our attentive staff ensures a memorable dining experience.",
     buttonLabel: "See Our Specialties",
-    buttonLink: "/specials",
+    buttonLink: "/chefs",
   },
   {
     title: "Unforgettable Dining Awaits You",

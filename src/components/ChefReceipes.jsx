@@ -18,11 +18,13 @@ import {
   Snackbar,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useParams } from "react-router-dom";
 import NotFoundPage from "./NotFoundPage";
 import recipesData from "./RecipeData";
+import Loader from "react-loader"; // Import the Loader component
 
 const ChefRecipes = ({ chefsData }) => {
   const { chefId } = useParams();
@@ -34,13 +36,23 @@ const ChefRecipes = ({ chefsData }) => {
   const [recipeToDelete, setRecipeToDelete] = useState(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarColor, setSnackbarColor] = useState(""); // Add state for Snackbar color
+  const [snackbarColor, setSnackbarColor] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
+    // Simulate loading for 2 seconds (adjust as needed)
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
     // Load favorited recipes from localStorage when the component mounts
     const storedFavoritedRecipes = JSON.parse(localStorage.getItem("favoritedRecipes")) || [];
     setFavoritedRecipes(storedFavoritedRecipes);
   }, []);
+
+  if (isLoading) {
+    return <Loader loaded={false} />; // Display the loader while loading
+  }
 
   if (!selectedChef) {
     return <NotFoundPage />;
@@ -59,9 +71,9 @@ const ChefRecipes = ({ chefsData }) => {
 
   const handleDeleteConfirm = () => {
     if (recipeToDelete) {
-      // Filter out the recipe to delete
-      const updatedRecipes = chefRecipes.filter((recipe) => recipe.name !== recipeToDelete);
-      chefRecipesData.recipes = updatedRecipes;
+      // Filter out the recipe to delete from chefRecipesData.recipes
+      const updatedRecipes = chefRecipesData.recipes.filter((recipe) => recipe.name !== recipeToDelete);
+      chefRecipesData.recipes = updatedRecipes; // Update chefRecipesData.recipes
 
       // Update favorited recipes
       const updatedFavoritedRecipes = favoritedRecipes.filter((name) => name !== recipeToDelete);
@@ -126,7 +138,7 @@ const ChefRecipes = ({ chefsData }) => {
         </TableCell>
         <TableCell>{recipe.cookingMethod}</TableCell>
         <TableCell>
-          {recipe.rating} <FavoriteIcon color="error" />
+          {recipe.rating} <ThumbUpIcon color="error" />
         </TableCell>
         <TableCell>
           <IconButton
