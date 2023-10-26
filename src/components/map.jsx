@@ -9,44 +9,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import PhoneIcon from '@material-ui/icons/Phone';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-
 const useStyles = makeStyles((theme) => ({
-  fullScreenBackground: {
-    backgroundImage: `url('/images/contactus.jpg')`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    minHeight: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  grid: {
-    display: "flex",
-    width: "100%",
-    maxWidth: 1200, // Adjust as needed
-  },
-  gridItem: {
-    flex: "1",
-    padding: theme.spacing(2),
-    boxSizing: "border-box",
-  },
-  contactDetails: {
-    padding: theme.spacing(2),
-    background: "#FFF", // White background
-    borderRadius: "8px",
-    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
-    marginBottom: theme.spacing(2),
-    textAlign: "center",
-  },
   card: {
-    maxWidth: "100%",
+    maxWidth: 600,
+    margin: "0 auto",
     padding: theme.spacing(2),
     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
-    background: "#f9f9f9",
+    background: "#f9f9f9", // Light background color
   },
   form: {
     display: "flex",
@@ -56,13 +25,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   submitButton: {
-    backgroundColor: "#FF5722",
+    backgroundColor: "#FF5722", // Custom primary color
     color: "#FFF",
     "&:hover": {
-      backgroundColor: "#E64A19",
+      backgroundColor: "#E64A19", // Custom hover color
     },
   },
   mapContainer: {
+    marginTop: theme.spacing(4),
     border: "1px solid #ccc",
     height: "400px",
     position: "relative",
@@ -73,6 +43,27 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: 0,
     left: 0,
+  },
+  contactDetails: {
+    padding: theme.spacing(2),
+    background: "#FFF", // White background
+    borderRadius: "8px",
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
+    marginBottom: theme.spacing(2),
+    textAlign: "center",
+  },
+  sideBySide: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  gridItem: {
+    flex: "1",
+  },
+  fullScreenBackground: {
+    backgroundImage: `url('/images/contactus.jpg')`,
+    // backgroundSize: "cover",
+    backgroundPosition: "center",
+    minHeight: "100vh", //
   },
 }));
 
@@ -105,7 +96,16 @@ function ContactFormWithMap() {
   return (
     <div className={classes.fullScreenBackground}>
       <Container>
-        <div className={classes.grid}>
+        <div className={classes.contactDetails}>
+          <Typography variant="h5" component="div" color="primary">
+            Contact Us
+          </Typography>
+          <div>Email: booking@spicemasterindia.com</div>
+          <div>Phone: +1 123 456 7890</div>
+          <div>Daily: 8.00 am to 10.00 pm</div>
+          <div>Location: Kolkata, SaltLake, Sector -V, Pin- 700156</div>
+        </div>
+        <div className={classes.sideBySide}>
           <div className={classes.gridItem}>
             <Card className={classes.card}>
               <CardContent>
@@ -190,15 +190,6 @@ function ContactFormWithMap() {
             </Card>
           </div>
           <div className={classes.gridItem}>
-            <div className={classes.contactDetails}>
-              <Typography variant="h5" component="div" color="primary">
-                Contact Us
-              </Typography>
-              <div>Email: booking@spicemasterindia.com</div>
-              <div>Phone: +1 123 456 7890</div>
-              <div>Daily: 8.00 am to 10.00 pm</div>
-              <div>Location: Kolkata, SaltLake, Sector -V, Pin- 700156</div>
-            </div>
             <div className={classes.mapContainer}>
               <iframe
                 title="Map"

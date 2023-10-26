@@ -126,6 +126,7 @@ const LoginForm = ({
               style={{
                 backgroundColor: "#4285F4", // Google's brand color
                 color: "white",
+                marginTop: "10px",
               }}
               onClick={handleEmailPasswordLogin}
             >
@@ -141,6 +142,7 @@ const LoginForm = ({
               style={{
                 backgroundColor: "#4285F4", // Google's brand color
                 color: "white",
+                marginTop: "10px",
               }}
               onClick={signInWithGoogle}
             >
