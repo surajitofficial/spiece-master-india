@@ -16,6 +16,17 @@ cd spice-master-india
 
 3. Install the required dependencies:
 npm install
+npm i --legacy-peer-deps
 
 4. Start the development server:
 npm start
+
+## About the Project
+1. Home Page
+2. About Us
+3. Menu > Menu details
+4. Chefs > Chefs details
+5. Contact Us
+6. Register/ Login: First Register for better login flow
+7. Profile Details
+8. Reset Password using email
