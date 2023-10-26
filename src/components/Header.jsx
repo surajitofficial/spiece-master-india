@@ -106,6 +106,7 @@ function Header() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
+  const [userData, setUserData] = useState(null); // Store user information
 
   const openModal = () => {
     setModalOpen(true);
@@ -115,14 +116,16 @@ function Header() {
     setModalOpen(false);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (userData) => {
     // Implement your login logic here and update isLoggedIn state
     setIsLoggedIn(true);
+    setUserData(userData); // Set the user data when logged in
   };
 
   const handleLogout = () => {
     // Implement your logout logic here and update isLoggedIn state
     setIsLoggedIn(false);
+    setUserData(null); // Clear user data on logout
   };
 
   const customButtonStyle = {
@@ -209,10 +212,15 @@ function Header() {
                 </Link>
               </li>
               {isLoggedIn ? (
-                // Render user image and logout button if logged in
+                // Render user data and logout button if logged in
                 <>
                   <li>
-                    <img src="/images/user.jpg" alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
+                    <img src={userData.image} alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
+                  </li>
+                  <li>
+                    <Typography variant="body1" color="inherit">
+                      Welcome, {userData.name}
+                    </Typography>
                   </li>
                   <li>
                     <Button variant="contained" style={customButtonStyle} onClick={handleLogout}>

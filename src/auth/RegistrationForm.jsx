@@ -24,9 +24,9 @@ const RegistrationForm = ({
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [imagePath, setImagePath] = useState(""); // Add imagePath state
+  const [imagePath, setImagePath] = useState("");   
 
-  const handleRegistration = () => {
+  const handleRegistration = async () => {
     setNameError(false);
     setEmailError(false);
     setPasswordError(false);
@@ -48,15 +48,22 @@ const RegistrationForm = ({
       return;
     }
 
-    if (name && email && password) {
-      registerUser(email, name, password, imagePath) // Pass imagePath to registerUser
-        .then(() => {
-          openSnackbar("Registration successful");
-          onClose();
-        })
-        .catch((error) => {
-          // Handle registration error if needed
-        });
+    // if (name && email && password) {
+    //   registerUser(email, name, password, imagePath) // Pass imagePath to registerUser
+    //     .then(() => {
+    //       openSnackbar("Registration successful");
+    //       onClose();
+    //     })
+    //     .catch((error) => {
+    //       // Handle registration error if needed
+    //     });
+    // }
+    try {
+      await registerUser(email, name, password, imagePath);
+      openSnackbar("Registration successful");
+      onSwitchToLogin();
+    } catch (error) {
+      // Handle registration error if needed
     }
   };
 

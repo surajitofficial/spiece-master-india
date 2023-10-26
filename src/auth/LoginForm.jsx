@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { AccountCircle, GitHub, Google } from "@mui/icons-material";
 import { useUserContext } from "../context/userContext";
+import { auth } from "../firebase"; // Import Firebase authentication
 
 const LoginForm = ({
   email,
@@ -17,18 +18,20 @@ const LoginForm = ({
   password,
   setPassword,
   handleLogin,
+  onClose,
   onSwitchToRegistration,
   openSnackbar,
 }) => {
-  const { signInUser, forgotPassword } = useUserContext();
+  const { forgotPassword, signInUser } = useUserContext();
+
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleEmailPasswordLogin = () => {
+  const handleEmailPasswordLogin = async () => {
     setEmailError(false);
     setPasswordError(false);
 
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/;
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,4}/;
 
     if (!emailPattern.test(email)) {
       setEmailError(true);
@@ -40,14 +43,14 @@ const LoginForm = ({
       return;
     }
 
-    signInUser(email, password)
-      .then(() => {
-        openSnackbar("Login successful");
-        handleLogin();
-      })
-      .catch((error) => {
-        // Handle login error if needed
-      });
+    try {
+      await signInUser(email, password); // Sign in using Firebase Authentication
+      openSnackbar("Login successful");
+      handleLogin();
+    } catch (error) {
+      console.error("Firebase Authentication Error: ", error);
+      openSnackbar("Login failed: " + error.message);
+    }
   };
 
   const handleForgotPassword = () => {

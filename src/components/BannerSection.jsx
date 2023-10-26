@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
-import { Grid, Typography, Button, Link } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const images = [
   "/images/hero-slider-1.jpg",
@@ -44,7 +45,6 @@ const sliderContent = [
   },
 ];
 
-
 const BannerSection = () => {
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -58,9 +58,10 @@ const BannerSection = () => {
       clearInterval(interval);
     };
   }, []);
+
   return (
     <div style={sliderContainerStyle}>
-      <AwesomeSlider style={sliderStyle} selected={activeSlide}  bullets={false}>
+      <AwesomeSlider style={sliderStyle} selected={activeSlide} bullets={false}>
         {images.map((image, index) => (
           <div
             key={index}
@@ -83,14 +84,11 @@ const BannerSection = () => {
                 <Typography variant="body1" paragraph>
                   {sliderContent[index].description}
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component={Link}
-                  href={sliderContent[index].buttonLink}
-                >
-                  {sliderContent[index].buttonLabel}
-                </Button>
+                <Link to={sliderContent[index].buttonLink}>
+                  <Button variant="contained" color="primary">
+                    {sliderContent[index].buttonLabel}
+                  </Button>
+                </Link>
               </Grid>
             </Grid>
           </div>

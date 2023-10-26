@@ -41,8 +41,8 @@ function SimpleFooter() {
   const footerLinks = [
     { label: "Home", link: "/" },
     { label: "Menus", link: "/menu" },
-    { label: "About Us", link: "/about-us" },
-    { label: "Our Chefs", link: "/our-chefs" },
+    { label: "About Us", link: "/about" },
+    { label: "Our Chefs", link: "/chefs" },
     { label: "Contact", link: "/contact" },
   ];
 

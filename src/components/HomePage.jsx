@@ -7,11 +7,11 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Link,
   Avatar,
   Box,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Link } from "react-router-dom";
 import ChefSection from "./Chefs";
 import BannerSection from "./BannerSection";
 import Loader from "react-loader";
@@ -109,9 +109,11 @@ const AboutUsSection = () => {
           infuses our dishes with remarkable flavors and keeps our patrons
           coming back for more.
         </Typography>
-        <Button variant="contained" style={buttonStyle}>
-          Explore Our Menu
-        </Button>
+        <Link to="/menu">
+          <Button variant="contained" style={buttonStyle}>
+            Explore Our Menu
+          </Button>
+        </Link>
       </Container>
     </section>
   );
@@ -139,16 +141,18 @@ const ContactUsSection = () => {
           Phone: +1 123 456 7890 <br />
           Email: info@spicemaster.com
         </Typography>
-        <Button variant="contained" color="primary">
-          Contact Us
-        </Button>
+        <Link to="/contact">
+          <Button variant="contained" color="primary">
+            Contact Us
+          </Button>
+        </Link>
       </Container>
     </section>
   );
 };
 
 // Menu Section
-<MenuSection/>
+<MenuSection />;
 
 // Chef Section
 // const ChefSection = () => {
@@ -279,7 +283,7 @@ const Home = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 100); 
+    }, 100);
   }, []);
 
   return (
