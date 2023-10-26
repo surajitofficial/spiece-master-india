@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Container,
-  TextField,
-  Button,
-  Link,
-  Grid,
-} from "@mui/material";
+import { Container, TextField, Button, Link, Grid } from "@mui/material";
 import { useUserContext } from "../context/userContext";
 
 const RegistrationForm = ({
@@ -24,7 +18,7 @@ const RegistrationForm = ({
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [imagePath, setImagePath] = useState("");   
+  const [imagePath, setImagePath] = useState("");
 
   const handleRegistration = async () => {
     setNameError(false);

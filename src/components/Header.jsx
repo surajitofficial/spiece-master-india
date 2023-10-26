@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import AuthModal from "../auth/AuthModal";
+import UserProfileModal from "./UserProfileModal";
+import { useUserContext } from "../context/userContext";
 
 const HeaderContainer = styled("header")`
   background: #333;
@@ -104,9 +106,11 @@ const ContactText = styled("span")`
 function Header() {
   const location = useLocation();
 
+  const { user, logoutUser } = useUserContext();
+
   const [modalOpen, setModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
-  const [userData, setUserData] = useState(null); // Store user information
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const openModal = () => {
     setModalOpen(true);
@@ -118,24 +122,44 @@ function Header() {
 
   const handleLogin = (userData) => {
     // Implement your login logic here and update isLoggedIn state
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
     setUserData(userData); // Set the user data when logged in
   };
 
   const handleLogout = () => {
     // Implement your logout logic here and update isLoggedIn state
-    setIsLoggedIn(false);
-    setUserData(null); // Clear user data on logout
+    // setIsLoggedIn(false);
+    logoutUser(null); // Clear user data on logout
   };
 
   const customButtonStyle = {
-    backgroundColor: "#ff69b4", // Pink background color
+    backgroundColor: "#ff68b4", // Pink background color
     color: "white",
     borderRadius: "5px",
     boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Drop shadow
     "&:hover": {
       backgroundColor: "#ff1493", // Darker pink on hover
     },
+  };
+
+  const customLogOutButtonStyle = {
+    backgroundColor: "red", // Pink background color
+    color: "white",
+    borderRadius: "5px",
+    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)", // Drop shadow
+    "&:hover": {
+      backgroundColor: "#ff1493", // Darker pink on hover
+    },
+  };
+
+  const [userProfileModalOpen, setUserProfileModalOpen] = useState(false);
+
+  const openUserProfileModal = () => {
+    setUserProfileModalOpen(true);
+  };
+
+  const closeUserProfileModal = () => {
+    setUserProfileModalOpen(false);
   };
 
   return (
@@ -147,7 +171,9 @@ function Header() {
               <ContactIcon>
                 <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
               </ContactIcon>
-              <ContactText>Kolkata, SaltLake, Sector -V, Pin- 700156</ContactText>
+              <ContactText>
+                Kolkata, SaltLake, Sector -V, Pin- 700156
+              </ContactText>
             </ContactInfo>
 
             <div className="separator"></div>
@@ -211,31 +237,56 @@ function Header() {
                   Contact
                 </Link>
               </li>
-              {isLoggedIn ? (
-                // Render user data and logout button if logged in
+              {user ? (
                 <>
                   <li>
-                    <img src={userData.image} alt="User" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
+                    <img
+                      src={
+                        user.photoURL ? user.photoURL : "/Images/noImage.png"
+                      }
+                      alt="User"
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                      }}
+                      onClick={openUserProfileModal}
+                    />
                   </li>
+                  {userProfileModalOpen && (
+                    <UserProfileModal
+                      user={user}
+                      onClose={closeUserProfileModal}
+                    />
+                  )}
                   <li>
                     <Typography variant="body1" color="inherit">
-                      Welcome, {userData.name}
+                      Welcome, {user.displayName}
                     </Typography>
                   </li>
                   <li>
-                    <Button variant="contained" style={customButtonStyle} onClick={handleLogout}>
+                    <Button
+                      variant="contained"
+                      style={customLogOutButtonStyle}
+                      onClick={handleLogout}
+                    >
                       Logout
                     </Button>
                   </li>
                 </>
               ) : (
-                // Render login button if not logged in
                 <li>
-                  <Button variant="contained" color="primary" onClick={openModal}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={openModal}
+                  >
                     Login
                   </Button>
                 </li>
               )}
+
               <li>
                 <Link to={"/reservations"}>
                   <Button variant="contained" style={customButtonStyle}>
@@ -243,7 +294,11 @@ function Header() {
                   </Button>
                 </Link>
               </li>
-              <AuthModal open={modalOpen} onClose={closeModal} onLogin={handleLogin} />
+              <AuthModal
+                open={modalOpen}
+                onClose={closeModal}
+                onLogin={handleLogin}
+              />
             </ul>
           </Navbar>
         </Container>

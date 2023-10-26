@@ -67,6 +67,7 @@ const AuthModal = ({ open, onClose }) => {
             email={email}
             setEmail={setEmail}
             password={password}
+            onClose={onClose}
             setPassword={setPassword}
             handleLogin={handleLogin}
             onSwitchToRegistration={handleSwitchToRegistration}

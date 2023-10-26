@@ -22,8 +22,7 @@ const LoginForm = ({
   onSwitchToRegistration,
   openSnackbar,
 }) => {
-  const { forgotPassword, signInUser } = useUserContext();
-
+  const { forgotPassword, signInUser, signInWithGoogle, signInWithGithub } = useUserContext();
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
@@ -44,9 +43,12 @@ const LoginForm = ({
     }
 
     try {
-      await signInUser(email, password); // Sign in using Firebase Authentication
+      await signInUser(email, password)
       openSnackbar("Login successful");
       handleLogin();
+      setTimeout(() => {
+        onClose();
+      }, 2000);
     } catch (error) {
       console.error("Firebase Authentication Error: ", error);
       openSnackbar("Login failed: " + error.message);
@@ -140,7 +142,7 @@ const LoginForm = ({
                 backgroundColor: "#4285F4", // Google's brand color
                 color: "white",
               }}
-              /* onClick={handleGoogleLogin} */
+              onClick={signInWithGoogle}
             >
               <IconButton color="inherit">
                 <Google />
@@ -156,7 +158,7 @@ const LoginForm = ({
                 backgroundColor: "#333", // GitHub's brand color
                 color: "white",
               }}
-              /* onClick={handleGitHubLogin} */
+              onClick={signInWithGithub}
             >
               <IconButton color="inherit">
                 <GitHub />
