@@ -13,8 +13,9 @@ import {
 import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Loader from "react-loader";
+import chefsData from "../../api/chefsData"
 
-const ChefSection = ({ chefsData }) => {
+const ChefSection = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

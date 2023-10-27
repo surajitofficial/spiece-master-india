@@ -18,18 +18,21 @@ import {
   Snackbar,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useParams } from "react-router-dom";
 import NotFoundPage from "../404/NotFoundPage";
 import recipesData from "./RecipeData";
-import Loader from "react-loader"; // Import the Loader component
+import Loader from "react-loader";
+import chefsData from "../../api/chefsData";
 
-const ChefRecipes = ({ chefsData }) => {
+const ChefRecipes = () => {
   const { chefId } = useParams();
   const selectedChef = chefsData.find((chef) => chef.id === parseInt(chefId));
-  const chefRecipesData = recipesData.find((data) => data.chefId === parseInt(chefId));
+  const chefRecipesData = recipesData.find(
+    (data) => data.chefId === parseInt(chefId)
+  );
 
   const [favoritedRecipes, setFavoritedRecipes] = useState([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -46,7 +49,8 @@ const ChefRecipes = ({ chefsData }) => {
     }, 500);
 
     // Load favorited recipes from localStorage when the component mounts
-    const storedFavoritedRecipes = JSON.parse(localStorage.getItem("favoritedRecipes")) || [];
+    const storedFavoritedRecipes =
+      JSON.parse(localStorage.getItem("favoritedRecipes")) || [];
     setFavoritedRecipes(storedFavoritedRecipes);
   }, []);
 
@@ -66,17 +70,24 @@ const ChefRecipes = ({ chefsData }) => {
 
   const updateLocalStorage = (updatedFavoritedRecipes) => {
     // Update localStorage with the updated list of favorited recipes
-    localStorage.setItem("favoritedRecipes", JSON.stringify(updatedFavoritedRecipes));
+    localStorage.setItem(
+      "favoritedRecipes",
+      JSON.stringify(updatedFavoritedRecipes)
+    );
   };
 
   const handleDeleteConfirm = () => {
     if (recipeToDelete) {
       // Filter out the recipe to delete from chefRecipesData.recipes
-      const updatedRecipes = chefRecipesData.recipes.filter((recipe) => recipe.name !== recipeToDelete);
+      const updatedRecipes = chefRecipesData.recipes.filter(
+        (recipe) => recipe.name !== recipeToDelete
+      );
       chefRecipesData.recipes = updatedRecipes; // Update chefRecipesData.recipes
 
       // Update favorited recipes
-      const updatedFavoritedRecipes = favoritedRecipes.filter((name) => name !== recipeToDelete);
+      const updatedFavoritedRecipes = favoritedRecipes.filter(
+        (name) => name !== recipeToDelete
+      );
 
       // Update localStorage with the updated list of favorited recipes
       updateLocalStorage(updatedFavoritedRecipes);
@@ -103,7 +114,9 @@ const ChefRecipes = ({ chefsData }) => {
   const handleFavoriteClick = (recipeName) => {
     if (favoritedRecipes.includes(recipeName)) {
       // Remove the recipe from favorited recipes
-      const updatedFavoritedRecipes = favoritedRecipes.filter((name) => name !== recipeName);
+      const updatedFavoritedRecipes = favoritedRecipes.filter(
+        (name) => name !== recipeName
+      );
       setFavoritedRecipes(updatedFavoritedRecipes);
 
       // Update localStorage
