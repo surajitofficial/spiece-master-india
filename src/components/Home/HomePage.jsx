@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
-import ChefSection from "./Chefs";
-import BannerSection from "./BannerSection";
+import ChefSection from "../Chef/Chefs";
+import BannerSection from "../Banner/BannerSection";
 import Loader from "react-loader";
-import MenuSection from "./MenuPage";
+import MenuSection from "../Menu/MenuPage";
 
 const chefsData = [
   {
@@ -151,131 +151,8 @@ const ContactUsSection = () => {
   );
 };
 
-// Menu Section
+// Menu component
 <MenuSection />;
-
-// Chef Section
-// const ChefSection = () => {
-//   const chefsData = [
-//     {
-//       name: "Chef John Doe",
-//       experience: "10 Years",
-//       recipes: 150,
-//       likes: 500,
-//       image: "/Images/chef1.jpg",
-//     },
-//     {
-//       name: "Chef Jane Smith",
-//       experience: "8 Years",
-//       recipes: 120,
-//       likes: 450,
-//       image: "/Images/chef.jpeg",
-//     },
-//     {
-//       name: "Chef Sarah Wilson",
-//       experience: "12 Years",
-//       recipes: 180,
-//       likes: 600,
-//       image: "/Images/chef3.jpeg",
-//     },
-//     {
-//       name: "Chef David Clark",
-//       experience: "7 Years",
-//       recipes: 90,
-//       likes: 350,
-//       image: "/Images/chef4.jpg",
-//     },
-//     {
-//       name: "Chef Emily Brown",
-//       experience: "9 Years",
-//       recipes: 140,
-//       likes: 550,
-//       image: "/Images/chef5.jpg",
-//     },
-//     {
-//       name: "Chef Michael Taylor",
-//       experience: "11 Years",
-//       recipes: 160,
-//       likes: 700,
-//       image: "/Images/chef6.jpg",
-//     },
-//   ];
-
-//   const sectionStyle = {
-//     background: `url('/Images/chef_bg.jpg')`, // Replace 'your-background-image.jpg' with the actual image path
-//     backgroundSize: "cover",
-//     backgroundRepeat: "no-repeat",
-//     backgroundPosition: "center",
-//     padding: "80px 0",
-//     opacity: 0.7, // Adjust the opacity as needed
-//   };
-
-//   return (
-//     <section style={sectionStyle}>
-//       <Container>
-//         <Typography
-//           variant="h3"
-//           align="center"
-//           gutterBottom
-//           style={{ color: "#fff" }}
-//         >
-//           Our Talented Chefs
-//         </Typography>
-//         <Grid container spacing={3}>
-//           {chefsData.map((chef, index) => (
-//             <Grid item xs={12} sm={6} md={4} key={index}>
-//               <Card style={{ height: "100%" }}>
-//                 <CardMedia
-//                   component="img"
-//                   alt={chef.name}
-//                   height="250"
-//                   image={chef.image}
-//                 />
-//                 <CardContent>
-//                   <Typography
-//                     variant="h6"
-//                     component="div"
-//                     style={{ color: "#333" }}
-//                   >
-//                     {chef.name}
-//                   </Typography>
-//                   <Typography variant="body2" color="textSecondary">
-//                     {chef.experience} of Experience
-//                   </Typography>
-//                   <Typography variant="body2" color="textSecondary">
-//                     {chef.recipes} Recipes
-//                   </Typography>
-//                   <Box display="flex" alignItems="center">
-//                     <Avatar
-//                       style={{
-//                         backgroundColor: "red",
-//                         marginRight: "5px",
-//                         width: "20px",
-//                         height: "20px",
-//                         fontSize: "12px",
-//                       }}
-//                     >
-//                       <FavoriteIcon
-//                         fontSize="small"
-//                         style={{ color: "white" }}
-//                       />
-//                     </Avatar>
-//                     <Typography variant="body2" color="textSecondary">
-//                       {chef.likes} Likes
-//                     </Typography>
-//                   </Box>
-//                   <Button variant="contained" color="primary">
-//                     View Recipes
-//                   </Button>
-//                 </CardContent>
-//               </Card>
-//             </Grid>
-//           ))}
-//         </Grid>
-//       </Container>
-//     </section>
-//   );
-// };
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -294,7 +171,7 @@ const Home = () => {
         <>
           <BannerSection />
           <MenuSection />
-          <ChefSection chefsData={chefsData} /> {/* Pass chefsData as a prop */}
+          <ChefSection chefsData={chefsData} />
           <AboutUsSection />
           <ContactUsSection />
         </>

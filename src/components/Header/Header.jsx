@@ -10,9 +10,9 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import AuthModal from "../auth/AuthModal";
-import UserProfileModal from "./UserProfileModal";
-import { useUserContext } from "../context/userContext";
+import AuthModal from "../../auth/AuthModal";
+import UserProfileModal from "../User/UserProfileModal";
+import { useUserContext } from "../../context/userContext";
 
 const HeaderContainer = styled("header")`
   background: #333;

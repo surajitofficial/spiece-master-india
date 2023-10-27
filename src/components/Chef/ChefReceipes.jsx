@@ -22,7 +22,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useParams } from "react-router-dom";
-import NotFoundPage from "./NotFoundPage";
+import NotFoundPage from "../404/NotFoundPage";
 import recipesData from "./RecipeData";
 import Loader from "react-loader"; // Import the Loader component
 

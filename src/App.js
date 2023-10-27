@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import HomePage from "./components/HomePage";
-import MenuPage from "./components/MenuPage";
-import ReservationPage from "./components/ReservationPage";
-import ContactPage from "./components/ContactPage";
-import AboutUs from "./components/AboutUs";
-import Chefs from "./components/Chefs";
-import ChefRecipes from "./components/ChefReceipes";
-import MenuDetails from "./components/MenuDetails";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import HomePage from "./components/Home/HomePage";
+import MenuPage from "./components/Menu/MenuPage";
+import ReservationPage from "./components/Reservation/ReservationPage";
+import ContactPage from "./components/Contact/ContactPage";
+import AboutUs from "./components/About/AboutUs";
+import Chefs from "./components/Chef/Chefs";
+import ChefRecipes from "./components/Chef/ChefReceipes";
+import MenuDetails from "./components/Menu/MenuDetails";
 
 const chefsData = [
   {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, DialogTitle, DialogContent, Button, Grid } from "@mui/material";
-import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../../context/userContext";
 
 function UserProfileModal({ onClose, email, openSnackbar }) {
   const { user, forgotPassword } = useUserContext();

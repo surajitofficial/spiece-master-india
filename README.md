@@ -29,4 +29,4 @@ npm start
 5. Contact Us
 6. Register/ Login: First Register for better login flow
 7. Profile Details
-8. Reset Password using email
+8. Reset Password using
