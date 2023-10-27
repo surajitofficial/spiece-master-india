@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import HomePage from "./components/Home/HomePage";
@@ -10,6 +10,7 @@ import AboutUs from "./components/About/AboutUs";
 import Chefs from "./components/Chef/Chefs";
 import ChefRecipes from "./components/Chef/ChefReceipes";
 import MenuDetails from "./components/Menu/MenuDetails";
+import NotFoundPage from "./components/404/NotFoundPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/chef/:chefId" element={<ChefRecipes />} />
+          <Route path="*" element={<NotFoundPage/>} />
         </Routes>
         <Footer />
       </div>
