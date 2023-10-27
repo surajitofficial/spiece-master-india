@@ -15,7 +15,7 @@ To get started with this project, follow the instructions below:
 cd spice-master-india
 
 3. Install the required dependencies:
-npm install
+npm install || 
 npm i --legacy-peer-deps
 
 4. Start the development server:
